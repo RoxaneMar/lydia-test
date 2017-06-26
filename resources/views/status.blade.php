@@ -1,1 +1,0 @@
-status.blade.php
