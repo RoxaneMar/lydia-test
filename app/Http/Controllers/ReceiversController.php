@@ -25,21 +25,33 @@ class ReceiversController extends Controller
 
   public function payment()
   {
+    $email = $_GET['recipient'];
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_URL => "https://homologation.lydia-app.com/api/request/do.json",
+    CURLOPT_POSTFIELDS => array("vendor_token" => "58385365be57f651843810",
+      "recipient" => $email,
+      "amount" => "50",
+      "currency" => "EUR",
+      "type" => "email"
+      )
+));
+
+    $result = curl_exec($curl);
+    curl_close($curl);
+
+    $jsonArray = json_decode($result, true);
+    $request_id = $jsonArray["request_id"];
+
     $data = array(
     'firstname' => $_GET['firstname'],
     'lastname' => $_GET['lastname'],
-    'email' => $_GET['recipient']);
+    'email' => $_GET['recipient'],
+    'result' => $result,
+    'request_id' => $request_id);
     return view('payments')->with($data);
-
-
-    // "https://homologation.lydia-app.com/api/request/do.json"
-    // <input type="hidden" name="vendor_token" value="58385365be57f651843810">
-    //   <input type="hidden" name="amount" value="50">
-    //   <input type="hidden" name="currency" value="EUR">
-    //   <input type="hidden" name="type" value="email">
-    //   <input type="hidden" name="confirm_url" value="http://localhost:8000/payment">
   }
-
 }
 
 ?>
