@@ -25,6 +25,9 @@ class ReceiversController extends Controller
 
   public function payment()
   {
+
+    // API payment request
+    // ATTENTION faire un cas if error === "0"
     $email = $_GET['recipient'];
     $curl = curl_init();
     curl_setopt_array($curl, array(
@@ -36,14 +39,30 @@ class ReceiversController extends Controller
       "currency" => "EUR",
       "type" => "email"
       )
-));
+    ));
 
     $result = curl_exec($curl);
     curl_close($curl);
 
+    // Get info from API response
     $jsonArray = json_decode($result, true);
     $request_id = $jsonArray["request_id"];
+    $error = $jsonArray["error"];
+    $message = $jsonArray["message"];
 
+    // Save an instance to the database
+    $receiver = \App\Receiver::create(array(
+      'firstname' => $_GET['firstname'],
+      'lastname' => $_GET['lastname'],
+      'email' => $_GET['recipient'],
+      'amount' => "50",
+      'error' => $error,
+      'request_id' => $request_id,
+      'message' => $message));
+
+    $receiver->save();
+
+    // Give data to the view
     $data = array(
     'firstname' => $_GET['firstname'],
     'lastname' => $_GET['lastname'],
@@ -51,6 +70,11 @@ class ReceiversController extends Controller
     'result' => $result,
     'request_id' => $request_id);
     return view('payments')->with($data);
+  }
+
+  public function status() {
+    $receivers = \DB::table('receivers')->get();
+    return view('status', compact('receivers'));
   }
 }
 

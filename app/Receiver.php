@@ -6,6 +6,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
   class Receiver extends Model {
+
+
+    protected $fillable = array('firstname', 'lastname', 'email', 'amount', 'error', 'request_id', 'message');
+
       public $firstname;
       public $lastname;
       public $email;
@@ -16,14 +20,14 @@ use Illuminate\Database\Eloquent\Model;
       public $request_id;
       public $message;
 
-      public function __construct($firstname, $lastname, $email, $amount, $error, $request_id, $message) {
-        $this->firstname = $firstname;
-        $this->lastname = $lastname;
-        $this->email = $email;
-        $this->amount = $amount;
-        $this->error = $error;
-        $this->request_id = $request_id;
-        $this->message = $message;
-      }
+      // public function __construct($firstname, $lastname, $email, $amount, $error, $request_id, $message) {
+      //   $this->firstname = $firstname;
+      //   $this->lastname = $lastname;
+      //   $this->email = $email;
+      //   $this->amount = $amount;
+      //   $this->error = $error;
+      //   $this->request_id = $request_id;
+      //   $this->message = $message;
+      // }
     }
 ?>

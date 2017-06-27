@@ -22,8 +22,4 @@ Route::get('/', function () {
 
 Route::get('index', 'ReceiversController@index');
 Route::get('/payment', 'ReceiversController@payment');
-
-Route::get('status', function()
-{
-    return view('status');
-});
+Route::get('/status', 'ReceiversController@status');
