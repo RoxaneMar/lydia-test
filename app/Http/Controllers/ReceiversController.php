@@ -8,41 +8,23 @@ use Illuminate\Support\Facades\Request;
 class ReceiversController extends Controller
 {
   public function index() {
-
-    // $receivers = Receiver::all();
     return view('index');
-
-    // , compact('receivers')
   }
 
-  public function show($id)
-  {
-
-    $receiver = Receiver::find($id);
-
-    return view('receivers.show', compact('receiver'));
-  }
 
   public function payment()
   {
 
     // API payment request
-    // ATTENTION faire un cas if error === "0"
-    $email = $_GET['recipient'];
-    $curl = curl_init();
-    curl_setopt_array($curl, array(
-    CURLOPT_RETURNTRANSFER => 1,
-    CURLOPT_URL => "https://homologation.lydia-app.com/api/request/do.json",
-    CURLOPT_POSTFIELDS => array("vendor_token" => "58385365be57f651843810",
-      "recipient" => $email,
+
+    $url = "https://homologation.lydia-app.com/api/request/do.json";
+    $postfields = array("vendor_token" => "58385365be57f651843810",
+      "recipient" => $_GET['recipient'],
       "amount" => "50",
       "currency" => "EUR",
       "type" => "email"
-      )
-    ));
-
-    $result = curl_exec($curl);
-    curl_close($curl);
+      );
+    $result = $this->api_request($postfields, $url);
 
     // Get info from API response
     $jsonArray = json_decode($result, true);
@@ -74,7 +56,35 @@ class ReceiversController extends Controller
 
   public function status() {
     $receivers = \DB::table('receivers')->get();
-    return view('status', compact('receivers'));
+    $status = array();
+
+    foreach ($receivers as $receiver) {
+      $url = "https://homologation.lydia-app.com/api/request/state.json";
+      $postfields = array("request_id" => $receiver->request_id);
+      $result = $this->api_request($postfields, $url);
+
+      $jsonArray = json_decode($result, true);
+      $state = $jsonArray["state"];
+      $status[$receiver->request_id] = $state;
+    }
+
+    $data = array(
+      'receivers' => $receivers,
+      'status' => $status);
+
+    return view('status')->with($data);
+  }
+
+    public function api_request($postfields, $url) {
+      $curl = curl_init();
+      curl_setopt_array($curl, array(
+      CURLOPT_RETURNTRANSFER => 1,
+      CURLOPT_URL => $url,
+      CURLOPT_POSTFIELDS => $postfields
+      ));
+      $result = curl_exec($curl);
+      curl_close($curl);
+      return $result;
   }
 }
 
