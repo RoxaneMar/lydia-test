@@ -31,6 +31,7 @@
             }
 
             .title {
+                margin-top: 130px;
                 font-size: 50px;
             }
 
@@ -40,6 +41,23 @@
               color: #1f76b9;
               margin-top: 80px;
             }
+
+            table {
+              width: 100%;
+              display: table;
+              border-collapse: separate;
+              border-spacing: 40px;
+              border-bottom: 2px solid #1f76b9;
+            }
+
+              tr {
+                border-bottom: 1px solid grey;
+              }
+
+              thead {
+                color: #1f76b9;
+                border-bottom: 2px solid #1f76b9;
+              }
 
             .navbar {
               background-color: #1f76b9;
@@ -77,8 +95,9 @@
           <a class="primary-button" href="http://localhost:8000/status">See all payment requests status</a>
         </div>
       <div class="container">
+        <div class="title">Welcome to Lydia!</div>
         <div class="content">
-            <div class="title">Welcome to Lydia!</div>
+
             @yield('content')
         </div>
       </div>
