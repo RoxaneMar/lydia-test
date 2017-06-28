@@ -2,36 +2,37 @@
   <html>
     <head>
       <title>Lydia - test </title>
-      <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/app.scss') }}" rel="stylesheet" type="text/css" >
+
         <style>
           html, body {
-                  height: 100%;
-              }
+            height: 100%;
+          }
 
           body {
-              margin: 0;
-              padding: 0;
-              width: 100%;
-              display: table;
-              font-weight: 100;
-              /*font-family: 'Lato';*/
-              font-family: ProximaNova-Regular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            display: table;
+            font-weight: 100;
+            /*font-family: 'Lato';*/
+            font-family: ProximaNova-Regular, "Helvetica Neue", Helvetica, Arial, sans-serif;
           }
 
           .container {
-              text-align: center;
-              display: table-cell;
-              vertical-align: middle;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
           }
 
           .content {
-              text-align: left;
-              display: inline-block;
+            text-align: left;
+            display: inline-block;
           }
 
           .title {
-              margin-top: 130px;
-              font-size: 50px;
+            margin-top: 130px;
+            font-size: 50px;
           }
 
           h3 {
@@ -50,9 +51,9 @@
             border-bottom: 2px solid #1f76b9;
           }
 
-            thead {
-              color: #1f76b9;
-            }
+          thead {
+            color: #1f76b9;
+          }
 
           .navbar {
             background-color: #1f76b9;
@@ -81,6 +82,23 @@
             text-decoration: none;
             color: white;
           }
+
+          .secondary-button {
+            color: #666666;
+            border: 1px solid #666666;
+            padding: 10px 15px;
+            border-radius: 50px;
+            font-weight: lighter;
+            opacity: 0.6;
+            text-decoration: none;
+          }
+
+          .secondary-button:hover{
+            opacity: 1;
+            text-decoration: none;
+            color: #666666;
+          }
+
         </style>
     </head>
     <body>
