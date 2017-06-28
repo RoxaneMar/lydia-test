@@ -11,15 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // Route::get('index', function()
 // {
 //     return view('index');
 // });
 
-Route::get('index', 'ReceiversController@index');
+Route::get('/', 'ReceiversController@index');
 Route::get('/payment', 'ReceiversController@payment');
 Route::get('/status', 'ReceiversController@status');

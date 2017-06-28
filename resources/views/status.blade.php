@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>Date</th>
       <th>Firstname</th>
       <th>Lastname</th>
       <th>Email</th>
@@ -15,6 +16,7 @@
   <tbody>
     @foreach ($receivers as $receiver)
     <tr>
+      <td>{{ $receiver->created_at }}</td>
       <td>{{ $receiver->firstname }}</td>
       <td>{{ $receiver->lastname }}</td>
       <td>{{ $receiver->email }}</td>

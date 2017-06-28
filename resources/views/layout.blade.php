@@ -46,17 +46,13 @@
               width: 100%;
               display: table;
               border-collapse: separate;
-              border-spacing: 40px;
+              padding: 10px;
+              border-spacing: 50px;
               border-bottom: 2px solid #1f76b9;
             }
 
-              tr {
-                border-bottom: 1px solid grey;
-              }
-
               thead {
                 color: #1f76b9;
-                border-bottom: 2px solid #1f76b9;
               }
 
             .navbar {
@@ -91,7 +87,7 @@
     </head>
     <body>
       <div class="navbar">
-          <a class="primary-button" href="http://localhost:8000/index">Make a payment request</a>
+          <a class="primary-button" href="http://localhost:8000/">Make a payment request</a>
           <a class="primary-button" href="http://localhost:8000/status">See all payment requests status</a>
         </div>
       <div class="container">
