@@ -1,11 +1,11 @@
 @extends('layout')
 
 @section('content')
-    <h3>Contact Lydia</h3>
-    <form action="form.php" method="POST">
-      <p>First name</p> <input type="text" name="firstname" required>
-      <p>Last name</p> <input type="text" name="lastname" required>
-      <p>Email address</p> <input type="text" name="email" required>
+    <h3>Make a payment request:</h3>
+    <form action="/payment" method="GET">
+      <p>First name</p> <input type="string" name="firstname" required>
+      <p>Last name</p> <input type="string" name="lastname" required>
+      <p>Email address</p> <input type="string" name="recipient" required>
       <input type="submit" value="Send">
     </form>
 @stop
