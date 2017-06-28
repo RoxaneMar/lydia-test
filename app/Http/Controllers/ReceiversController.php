@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Request;
-// use Illuminate\Http\Request;
 
 class ReceiversController extends Controller
 {
@@ -11,20 +10,18 @@ class ReceiversController extends Controller
     return view('index');
   }
 
-
   public function payment()
   {
 
     // API payment request
-
     $url = "https://homologation.lydia-app.com/api/request/do.json";
-    $postfields = array("vendor_token" => "58385365be57f651843810",
+    $postfields = ["vendor_token" => "58385365be57f651843810",
       "recipient" => $_GET['recipient'],
-      "amount" => "50",
+      "amount" => "20",
       "currency" => "EUR",
       "type" => "email",
       "confirm_url" => "http://localhost:8000/payment"
-      );
+    ];
     $result = $this->api_request($postfields, $url);
 
     // Get info from API response
@@ -34,29 +31,30 @@ class ReceiversController extends Controller
     $message = $jsonArray["message"];
 
     // Save an instance to the database
-    $receiver = \App\Receiver::create(array(
+    $receiver = \App\Receiver::create([
       'firstname' => $_GET['firstname'],
       'lastname' => $_GET['lastname'],
       'email' => $_GET['recipient'],
       'amount' => "20",
       'error' => $error,
       'request_id' => $request_id,
-      'message' => $message));
+      'message' => $message]);
 
     $receiver->save();
 
     // Give data to the view
-    $data = array(
-    'firstname' => $_GET['firstname'],
-    'lastname' => $_GET['lastname'],
-    'email' => $_GET['recipient'],
-    'result' => $result,
-    'request_id' => $request_id
-    );
+    $data = [
+      'firstname' => $_GET['firstname'],
+      'lastname' => $_GET['lastname'],
+      'email' => $_GET['recipient'],
+      'result' => $result,
+      'request_id' => $request_id
+    ];
     return view('payments')->with($data);
   }
 
   public function status() {
+
     // Retrieve receivers instances from DB
     $receivers = \DB::table('receivers')->orderBy('created_at', 'desc')->get();
     $status = array();
@@ -64,7 +62,7 @@ class ReceiversController extends Controller
     // API request for each instance
     foreach ($receivers as $receiver) {
       $url = "https://homologation.lydia-app.com/api/request/state.json";
-      $postfields = array("request_id" => $receiver->request_id);
+      $postfields = ["request_id" => $receiver->request_id];
       $result = $this->api_request($postfields, $url);
 
       $jsonArray = json_decode($result, true);
@@ -74,20 +72,20 @@ class ReceiversController extends Controller
     }
 
     // Give data to the view
-    $data = array(
+    $data = [
       'receivers' => $receivers,
-      'status' => $status);
+      'status' => $status];
 
     return view('status')->with($data);
   }
 
     public function api_request($postfields, $url) {
       $curl = curl_init();
-      curl_setopt_array($curl, array(
-      CURLOPT_RETURNTRANSFER => 1,
-      CURLOPT_URL => $url,
-      CURLOPT_POSTFIELDS => $postfields
-      ));
+      curl_setopt_array($curl, [
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_URL => $url,
+        CURLOPT_POSTFIELDS => $postfields
+      ]);
       $result = curl_exec($curl);
       curl_close($curl);
       return $result;
