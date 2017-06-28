@@ -4,7 +4,8 @@
 <br>
 <br>
     <p>Your payment request has been submitted successfully, the request has been sent to {{ $email }} </p>
-<!--     <p> {{ $result }}</p>
-    <p> Request_id = {{ $request_id }}</p> -->
+    <br>
+    <br>
+    <a class="secondary-button" href="http://localhost:8000/status">See all payment requests status</a>
 @stop
 
